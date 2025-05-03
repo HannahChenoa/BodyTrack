@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BodyTrack - Home</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background: white;
+      min-height: 100vh;
+    }
+    .muscle-image {
+      width: 100%;
+      max-width: 600px;
+      filter: drop-shadow(0 0 10px rgba(0,0,0,0.3));
+      opacity: 1;
+      transition: all 0.3s ease-in-out;
+    }
+    .toggle-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .form-switch .form-check-input {
+      width: 50px;
+      height: 25px;
+    }
+    .btn-muscle {
+      min-width: 120px;
+      transition: transform 0.2s ease;
+    }
+    .btn-muscle:hover {
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">BodyTrack</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="./profile.html">Perfil</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./historial.html">Historial</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./login.html">Cerrar sesión</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div class="container mt-5 d-flex flex-column align-items-center">
+    <h2 class="mb-4 text-center">Selecciona el grupo muscular que deseas entrenar</h2>
+
+    <!-- Switch para cambiar entre hombre y mujer -->
+    <div class="toggle-container">
+      <label class="form-check-label">Hombre</label>
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="genderSwitch">
+      </div>
+      <label class="form-check-label">Mujer</label>
+    </div>
+
+    <!-- Imagen de cuerpo humano -->
+    <img id="muscleImage" src="./images/hombre.png" alt="Cuerpo" class="muscle-image mb-4">
+
+    <!-- Botones para seleccionar zonas musculares -->
+    <div class="d-flex flex-wrap justify-content-center gap-3">
+      <button onclick="location.href='Rutinas.html?zona=hombros'" class="btn btn-primary m-2">Hombros</button>
+      <button onclick="location.href='Rutinas.html?zona=Pecho'" class="btn btn-primary m-2">Pecho</button>
+      <button onclick="location.href='Rutinas.html?zona=espalda'" class="btn btn-primary m-2">Espalda</button>
+      <button onclick="location.href='Rutinas.html?zona=brazos'" class="btn btn-primary m-2">Brazos</button>
+      <button onclick="location.href='Rutinas.html?zona=piernas'" class="btn btn-primary m-2">Piernas</button>
+      <button onclick="location.href='Rutinas.html?zona=abdomen'" class="btn btn-primary m-2">Abdomen</button>
+      <button onclick="location.href='Rutinas.html?zona=gluteos'" class="btn btn-primary m-2">Glúteos</button>
+      <button onclick="location.href='Rutinas.html?zona=pantorrillas'" class="btn btn-primary m-2">Pantorrillas</button>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Script para cambiar imagen -->
+  <script>
+    const genderSwitch = document.getElementById('genderSwitch');
+    const muscleImage = document.getElementById('muscleImage');
+
+    // Por defecto, mostrar la imagen del hombre
+    let isFemale = false;
+
+    genderSwitch.addEventListener('change', function() {
+      isFemale = !isFemale;
+      muscleImage.src = isFemale ? "./images/mujer.png" : "./images/hombre.png";
+    });
+  </script>
+</body>
+</html>

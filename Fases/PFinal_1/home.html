@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BodyTrack - Home</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background: white;
+      min-height: 100vh;
+    }
+    .muscle-image {
+      width: 100%;
+      max-width: 600px;
+      filter: drop-shadow(0 0 10px rgba(0,0,0,0.3));
+      opacity: 1;
+      transition: all 0.3s ease-in-out;
+    }
+    .toggle-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .form-switch .form-check-input {
+      width: 50px;
+      height: 25px;
+    }
+    .btn-muscle {
+      min-width: 120px;
+      transition: transform 0.2s ease;
+    }
+    .btn-muscle:hover {
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">BodyTrack</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="./profile.html">Perfil</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./login.html">Cerrar sesión</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div class="container mt-5 d-flex flex-column align-items-center">
+    <h2 class="mb-4 text-center">Selecciona el grupo muscular que deseas entrenar</h2>
+
+    <!-- Switch para cambiar entre hombre y mujer -->
+    <div class="toggle-container">
+      <label class="form-check-label">Hombre</label>
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="genderSwitch">
+      </div>
+      <label class="form-check-label">Mujer</label>
+    </div>
+
+    <!-- Imagen de cuerpo humano -->
+    <img id="muscleImage" src="./images/hombre.png" alt="Cuerpo" class="muscle-image mb-4">
+
+    <!-- Botones para seleccionar zonas musculares -->
+    <div class="d-flex flex-wrap justify-content-center gap-3">
+      <button onclick="location.href='Rutinas.html?zona=espalda'" class="btn btn-primary m-2">Espalda</button>
+      <button onclick="location.href='Rutinas.html?zona=hombros'" class="btn btn-primary m-2">Hombros</button>
+      <button onclick="location.href='Rutinas.html?zona=brazos'" class="btn btn-primary m-2">Brazos</button>
+      <button onclick="location.href='Rutinas.html?zona=piernas'" class="btn btn-primary m-2">Piernas</button>
+      <button onclick="location.href='Rutinas.html?zona=abdomen'" class="btn btn-primary m-2">Abdomen</button>
+      <button onclick="location.href='Rutinas.html?zona=gluteos'" class="btn btn-primary m-2">Glúteos</button>
+      <button onclick="location.href='Rutinas.html?zona=pantorrillas'" class="btn btn-primary m-2">Pantorrillas</button>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Script para cambiar imagen -->
+  <script>
+    const genderSwitch = document.getElementById('genderSwitch');
+    const muscleImage = document.getElementById('muscleImage');
+
+    // Por defecto, mostrar la imagen del hombre
+    let isFemale = false;
+
+    genderSwitch.addEventListener('change', function() {
+      isFemale = !isFemale;
+      muscleImage.src = isFemale ? "./images/mujer.png" : "./images/hombre.png";
+    });
+  </script>
+
+<div class="container my-4">
+  <div class="row">
+    <div class="col-md-6">
+      <h3>Ejercicios Disponibles</h3>
+      <div id="ejercicios-lista" class="list-group"></div>
+    </div>
+    <div class="col-md-6">
+      <h3>Historial de Ejercicios</h3>
+      <ul id="historial-ejercicios" class="list-group"></ul>
+    </div>
+  </div>
+</div>
+
+<script>
+const ejercicios = [
+    { nombre: "Sentadillas", categoria: "piernas", genero: "ambos" },
+    { nombre: "Press de banca", categoria: "pecho", genero: "hombre" },
+    { nombre: "Lagartijas", categoria: "pecho", genero: "mujer" },
+    { nombre: "Dominadas", categoria: "espalda", genero: "hombre" },
+    { nombre: "Remo con mancuerna", categoria: "espalda", genero: "mujer" },
+    { nombre: "Curl de bíceps", categoria: "brazos", genero: "ambos" },
+    { nombre: "Running", categoria: "cardio", genero: "ambos" }
+];
+
+const ejerciciosLista = document.getElementById('ejercicios-lista');
+const historialLista = document.getElementById('historial-ejercicios');
+
+function getGeneroSeleccionado() {
+    const toggle = document.getElementById('genderToggle'); // asumiendo id del toggle
+    return toggle.checked ? 'mujer' : 'hombre'; // si está activado es mujer
+}
+
+function mostrarEjercicios(categoriaSeleccionada) {
+    const generoSeleccionado = getGeneroSeleccionado();
+
+    ejerciciosLista.innerHTML = '';
+    const filtrados = ejercicios.filter(ej =>
+        ej.categoria === categoriaSeleccionada &&
+        (ej.genero === generoSeleccionado || ej.genero === "ambos")
+    );
+
+    if (filtrados.length === 0) {
+        ejerciciosLista.innerHTML = '<p class="text-muted">No hay ejercicios para esta selección.</p>';
+        return;
+    }
+
+    filtrados.forEach(ej => {
+        const div = document.createElement('button');
+        div.className = 'list-group-item list-group-item-action';
+        div.textContent = ej.nombre;
+        div.onclick = () => agregarHistorial(ej.nombre);
+        ejerciciosLista.appendChild(div);
+    });
+}
+
+function agregarHistorial(nombreEjercicio) {
+    let historial = JSON.parse(localStorage.getItem('historial')) || [];
+    historial.push(nombreEjercicio);
+    localStorage.setItem('historial', JSON.stringify(historial));
+    renderHistorial();
+}
+
+function renderHistorial() {
+    historialLista.innerHTML = '';
+    const historial = JSON.parse(localStorage.getItem('historial')) || [];
+    historial.forEach(nombre => {
+        const li = document.createElement('li');
+        li.className = 'list-group-item';
+        li.textContent = nombre;
+        historialLista.appendChild(li);
+    });
+}
+
+document.querySelectorAll('.btn-muscle').forEach(btn => {
+    btn.addEventListener('click', () => {
+        mostrarEjercicios(btn.getAttribute('data-categoria'));
+    });
+});
+
+renderHistorial();
+</script>
+
+</body>
+</html>

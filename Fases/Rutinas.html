@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BodyTrack - Rutinas</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%);
+      min-height: 100vh;
+    }
+    .card {
+      width: 100%;
+      max-width: 800px;
+    }
+  </style>
+
+  <script>
+    const ejerciciosPorZona = {
+      espalda: [
+        {nombre: 'Dominadas', descripcion: 'Ejercicio excelente para dorsales.', series: 4, repeticiones: '8-10'},
+        {nombre: 'Remo con barra', descripcion: 'Trabajo de espalda media.', series: 4, repeticiones: '10-12'}
+      ],
+      hombros: [
+        {nombre: 'Press militar', descripcion: 'Desarrollo de hombros.', series: 4, repeticiones: '8-10'},
+        {nombre: 'Elevaciones laterales', descripcion: 'Trabajo de deltoides.', series: 3, repeticiones: '15'}
+      ],
+      brazos: [
+        {nombre: 'Curl de bíceps', descripcion: 'Fuerza en bíceps.', series: 4, repeticiones: '12'},
+        {nombre: 'Extensión de tríceps', descripcion: 'Fuerza en tríceps.', series: 3, repeticiones: '12-15'}
+      ],
+      piernas: [
+        {nombre: 'Sentadillas', descripcion: 'Trabajo completo de piernas.', series: 4, repeticiones: '10-12'},
+        {nombre: 'Prensa de piernas', descripcion: 'Trabajo de cuádriceps.', series: 4, repeticiones: '12'}
+      ],
+      abdomen: [
+        {nombre: 'Crunch abdominal', descripcion: 'Trabajo de abdominales superiores.', series: 3, repeticiones: '20'},
+        {nombre: 'Elevaciones de piernas', descripcion: 'Trabajo de abdominales inferiores.', series: 3, repeticiones: '15-20'}
+      ],
+      gluteos: [
+        {nombre: 'Hip thrust', descripcion: 'Trabajo de glúteos.', series: 4, repeticiones: '12-15'},
+        {nombre: 'Zancadas', descripcion: 'Activación de glúteos y piernas.', series: 3, repeticiones: '15'}
+      ],
+      pantorrillas: [
+        {nombre: 'Elevaciones de talones de pie', descripcion: 'Trabajo de pantorrillas.', series: 4, repeticiones: '20'},
+        {nombre: 'Elevaciones sentado', descripcion: 'Trabajo enfocado en sóleo.', series: 3, repeticiones: '20-25'}
+      ]
+    };
+
+    function obtenerZona() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('zona') || 'espalda';
+    }
+
+    function cargarRutinas() {
+      const zona = obtenerZona();
+      const ejercicios = ejerciciosPorZona[zona] || [];
+      document.getElementById('tituloZona').textContent = `Rutinas - ${zona.charAt(0).toUpperCase() + zona.slice(1)}`;
+
+      const lista = document.getElementById('listaEjercicios');
+      lista.innerHTML = '';
+
+      ejercicios.forEach(ejercicio => {
+        const item = document.createElement('div');
+        item.className = 'list-group-item';
+        item.innerHTML = `
+          <h5 class="mb-1">${ejercicio.nombre}</h5>
+          <p class="mb-1">${ejercicio.descripcion}</p>
+          <small>Series: ${ejercicio.series} | Repeticiones: ${ejercicio.repeticiones}</small><br>
+          <a href="#" target="_blank" class="link-primary">Video de referencia</a>
+        `;
+        lista.appendChild(item);
+      });
+    }
+
+    window.onload = cargarRutinas;
+  </script>
+
+</head>
+
+<body class="d-flex justify-content-center align-items-center p-4">
+
+  <div class="card shadow p-4">
+    <h2 id="tituloZona" class="text-center mb-4">Rutinas</h2>
+
+    <div id="listaEjercicios" class="list-group mb-4">
+      <!-- Ejercicios se cargarán aquí dinámicamente -->
+    </div>
+
+  </div>
+
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
