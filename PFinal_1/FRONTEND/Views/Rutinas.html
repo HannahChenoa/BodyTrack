@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BodyTrack - Rutinas</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%);
+      min-height: 100vh;
+      padding: 2rem;
+    }
+    .card {
+      max-width: 900px;
+      margin: 2rem auto;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Botón para volver al Home -->
+  <div class="mb-4 text-center">
+    <a href="home.html" class="btn btn-secondary">← Volver al Inicio</a>
+  </div>
+
+  <!-- Botones para seleccionar zonas -->
+  <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
+    <button type="button" class="btn btn-primary" onclick="mostrarSeccion('hombros')">Hombros</button>
+    <button type="button" class="btn btn-primary" onclick="mostrarSeccion('pecho')">Pecho</button>
+    <button type="button" class="btn btn-primary" onclick="mostrarSeccion('espalda')">Espalda</button>
+    <button type="button" class="btn btn-primary" onclick="mostrarSeccion('brazos')">Brazos</button>
+    <button type="button" class="btn btn-primary" onclick="mostrarSeccion('piernas')">Piernas</button>
+    <button type="button" class="btn btn-primary" onclick="mostrarSeccion('abdomen')">Abdomen</button>
+    <button type="button" class="btn btn-primary" onclick="mostrarSeccion('gluteos')">Glúteos</button>
+    <button type="button" class="btn btn-primary" onclick="mostrarSeccion('pantorrillas')">Pantorrillas</button>
+  </div>
+
+  <!-- Secciones (cada una oculta al inicio) -->
+  <div class="card shadow p-4 seccion" id="hombros" style="display:none;">
+    <h2 class="text-center mb-4">Rutinas - Hombros</h2>
+    <div class="list-group">
+      <div class="list-group-item">
+        <h5>Press Militar con Barra</h5>
+        <p>Trabaja deltoides frontales y laterales.</p>
+        <small>Series: 4 | Repeticiones: 8-10</small><br>
+        <a href="https://www.youtube.com/watch?v=B-aVuyhvLHU" target="_blank">Ver video explicativo</a>
+      </div>
+      <div class="list-group-item">
+        <h5>Elevaciones Laterales</h5>
+        <p>Aíslan el deltoide lateral para mejorar la amplitud.</p>
+        <small>Series: 3 | Repeticiones: 12-15</small><br>
+        <a href="https://www.youtube.com/watch?v=kDqklk1ZESo" target="_blank">Ver video explicativo</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow p-4 seccion" id="pecho" style="display:none;">
+    <h2 class="text-center mb-4">Rutinas - Pecho</h2>
+    <div class="list-group">
+      <div class="list-group-item">
+        <h5>Press de Banca</h5>
+        <p>Trabaja el pecho medio de manera efectiva.</p>
+        <small>Series: 4 | Repeticiones: 10-12</small><br>
+        <a href="https://www.youtube.com/watch?v=rT7DgCr-3pg" target="_blank">Ver video explicativo</a>
+      </div>
+      <div class="list-group-item">
+        <h5>Aperturas con Mancuernas</h5>
+        <p>Excelente para estiramiento y activación muscular del pecho.</p>
+        <small>Series: 3 | Repeticiones: 15</small><br>
+        <a href="https://www.youtube.com/watch?v=eozdVDA78K0" target="_blank">Ver video explicativo</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow p-4 seccion" id="espalda" style="display:none;">
+    <h2 class="text-center mb-4">Rutinas - Espalda</h2>
+    <div class="list-group">
+      <div class="list-group-item">
+        <h5>Peso Muerto</h5>
+        <p>Ejercicio compuesto que trabaja toda la cadena posterior.</p>
+        <small>Series: 4 | Repeticiones: 6-8</small><br>
+        <a href="https://www.youtube.com/watch?v=ytGaGIn3SjE" target="_blank">Ver video explicativo</a>
+      </div>
+      <div class="list-group-item">
+        <h5>Dominadas</h5>
+        <p>Fortalece dorsales, romboides y brazos.</p>
+        <small>Series: 3 | Repeticiones: al fallo</small><br>
+        <a href="https://www.youtube.com/watch?v=eGo4IYlbE5g" target="_blank">Ver video explicativo</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow p-4 seccion" id="brazos" style="display:none;">
+    <h2 class="text-center mb-4">Rutinas - Brazos</h2>
+    <div class="list-group">
+      <div class="list-group-item">
+        <h5>Curl con Barra</h5>
+        <p>Ejercicio base para bíceps.</p>
+        <small>Series: 4 | Repeticiones: 10</small><br>
+        <a href="https://www.youtube.com/watch?v=kwG2ipFRgfo" target="_blank">Ver video explicativo</a>
+      </div>
+      <div class="list-group-item">
+        <h5>Extensión de Tríceps en Polea Alta</h5>
+        <p>Ideal para trabajar cabeza larga del tríceps.</p>
+        <small>Series: 3 | Repeticiones: 12-15</small><br>
+        <a href="https://www.youtube.com/watch?v=vB5OHsJ3EME" target="_blank">Ver video explicativo</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow p-4 seccion" id="piernas" style="display:none;">
+    <h2 class="text-center mb-4">Rutinas - Piernas</h2>
+    <div class="list-group">
+      <div class="list-group-item">
+        <h5>Sentadillas con Barra</h5>
+        <p>Desarrolla cuádriceps, glúteos y core.</p>
+        <small>Series: 4 | Repeticiones: 8-10</small><br>
+        <a href="https://www.youtube.com/watch?v=Dy28eq2PjcM" target="_blank">Ver video explicativo</a>
+      </div>
+      <div class="list-group-item">
+        <h5>Prensa de Piernas</h5>
+        <p>Aumenta fuerza en cuádriceps y glúteos.</p>
+        <small>Series: 4 | Repeticiones: 12</small><br>
+        <a href="https://www.youtube.com/watch?v=IZxyjW7MPJQ" target="_blank">Ver video explicativo</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow p-4 seccion" id="abdomen" style="display:none;">
+    <h2 class="text-center mb-4">Rutinas - Abdomen</h2>
+    <div class="list-group">
+      <div class="list-group-item">
+        <h5>Crunch en Máquina</h5>
+        <p>Aislamiento del recto abdominal.</p>
+        <small>Series: 3 | Repeticiones: 15</small><br>
+        <a href="https://www.youtube.com/watch?v=4Rr7A1mP8Ec" target="_blank">Ver video explicativo</a>
+      </div>
+      <div class="list-group-item">
+        <h5>Elevaciones de Piernas Colgado</h5>
+        <p>Trabaja abdominales inferiores.</p>
+        <small>Series: 3 | Repeticiones: 12-15</small><br>
+        <a href="https://www.youtube.com/watch?v=tKjcgfu44sI" target="_blank">Ver video explicativo</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow p-4 seccion" id="gluteos" style="display:none;">
+    <h2 class="text-center mb-4">Rutinas - Glúteos</h2>
+    <div class="list-group">
+      <div class="list-group-item">
+        <h5>Hip Thrust con Barra</h5>
+        <p>Excelente para activar y desarrollar los glúteos.</p>
+        <small>Series: 4 | Repeticiones: 10-12</small><br>
+        <a href="https://www.youtube.com/watch?v=LM8XHLYJoYs" target="_blank">Ver video explicativo</a>
+      </div>
+      <div class="list-group-item">
+        <h5>Patada de Glúteo en Polea</h5>
+        <p>Aíslan la parte superior del glúteo.</p>
+        <small>Series: 3 | Repeticiones: 15 por pierna</small><br>
+        <a href="https://www.youtube.com/watch?v=DJbBUcT5XZE" target="_blank">Ver video explicativo</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow p-4 seccion" id="pantorrillas" style="display:none;">
+    <h2 class="text-center mb-4">Rutinas - Pantorrillas</h2>
+    <div class="list-group">
+      <div class="list-group-item">
+        <h5>Elevaciones de Talones de Pie</h5>
+        <p>Trabaja el gastrocnemio.</p>
+        <small>Series: 4 | Repeticiones: 20</small><br>
+        <a href="https://www.youtube.com/watch?v=YMmgqO8Jo-k" target="_blank">Ver video explicativo</a>
+      </div>
+      <div class="list-group-item">
+        <h5>Elevaciones Sentado con Peso</h5>
+        <p>Aísla el sóleo.</p>
+        <small>Series: 4 | Repeticiones: 20</small><br>
+        <a href="https://www.youtube.com/watch?v=YMmgqO8Jo-k" target="_blank">Ver video explicativo</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script -->
+  <script>
+    function mostrarSeccion(id) {
+      document.querySelectorAll('.seccion').forEach(sec => sec.style.display = 'none');
+      const seccion = document.getElementById(id.toLowerCase());
+      if (seccion) {
+        seccion.style.display = 'block';
+      }
+    }
+
+    // Mostrar zona automáticamente al cargar
+    window.onload = function() {
+      const params = new URLSearchParams(window.location.search);
+      const zona = params.get('zona');
+      if (zona) {
+        mostrarSeccion(zona.toLowerCase());
+      }
+    };
+  </script>
+
+</body>
+</html>
