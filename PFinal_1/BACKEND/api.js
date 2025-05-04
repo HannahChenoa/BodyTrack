@@ -1,12 +1,25 @@
-const API_URL = 'http://localhost:3000/api'; // cambia si usas producción
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const app = express();
 
-export const crearUsuario = async (datos) => {
-  const res = await fetch(`${API_URL}/usuarios`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(datos)
-  });
-  return res.json();
-};
+// Middlewares
+app.use(cors({
+  origin: '*', // ← Esto permite cualquier origen
+  methods: ['GET', 'POST'],
+  credentials: true
+}));
+app.use(express.json());
+
+// Rutas
+const authRoutes = require('./Routes/authRoutes');
+app.use('/api/auth', authRoutes);
+
+// Conexión a MongoDB (pon tu URL aquí)
+mongoose.connect('mongodb+srv://admin:NuevaYork26@cluster0.oqqzpjo.mongodb.net/', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+}).then(() => console.log('✅ Conectado a MongoDB'))
+  .catch((err) => console.error('❌ Error al conectar a MongoDB', err));
+
+module.exports = app;

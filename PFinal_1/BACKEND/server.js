@@ -1,11 +1,6 @@
-const express = require('express');
-const app = express();
-const cors = require('cors');
+const app = require('./api');
 
-app.use(cors());
-app.use(express.json());
-
-const rutasUsuarios = require('./routes/usuarios');
-app.use(rutasUsuarios);
-
-app.listen(3001, () => console.log('Servidor backend corriendo en puerto 3000'));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
+});
