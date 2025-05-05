@@ -58,7 +58,7 @@
     </form>
 
     <!-- Formulario de Registro -->
-    <form id="formRegister" style="display: none;" onsubmit="alert('Registro exitoso'); return false;">
+    <form id="formRegister" style="display: none;">
       <div class="mb-3">
         <label for="registerName" class="form-label">Nombre completo</label>
         <input type="text" class="form-control" id="registerName" required>
@@ -90,16 +90,75 @@
   <!-- Script para redirigir después de login -->
   <script>
     const formLogin = document.getElementById('formLogin');
-
-    formLogin.addEventListener('submit', function(e) {
-      e.preventDefault(); // ✋ Evitar que mande el form realmente
-
-      // Aquí podrías hacer validaciones si quieres
-
-      // Redirigir manualmente al home
-      window.location.href = "./home.html";
+  
+    formLogin.addEventListener('submit', async function(e) {
+      e.preventDefault();
+  
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+  
+      try {
+        const response = await fetch('http://localhost:3000/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email, password })
+        });
+  
+        const data = await response.json();
+  
+        if (response.ok) {
+          alert(data.message);
+  
+          // Guarda datos si los necesitas
+          localStorage.setItem('userId', data.user.id);
+          localStorage.setItem('userName', data.user.name);
+          localStorage.setItem('userEmail', data.user.email); // ← esta es la línea nueva
+  
+          window.location.href = './home.html';
+        } else {
+          alert(data.message || 'Credenciales incorrectas');
+        }
+      } catch (error) {
+        console.error('Error al iniciar sesión:', error);
+        alert('Error al conectar con el servidor');
+      }
     });
   </script>
-
+  <script>
+    const formRegister = document.getElementById('formRegister');
+  
+    formRegister.addEventListener('submit', async function(e) {
+      e.preventDefault();
+  
+      const name = document.getElementById('registerName').value;
+      const email = document.getElementById('registerEmail').value;
+      const password = document.getElementById('registerPassword').value;
+  
+      try {
+        const response = await fetch('http://localhost:3000/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ name, email, password })
+        });
+  
+        const data = await response.json();
+  
+        if (response.ok) {
+          alert('Registro exitoso');
+          toggleForms(); // cambia a login automáticamente
+        } else {
+          alert(data.message || 'Error al registrar');
+        }
+      } catch (error) {
+        console.error('Error en registro:', error);
+        alert('Error al conectar con el servidor');
+      }
+    });
+  </script>
+  
 </body>
 </html>

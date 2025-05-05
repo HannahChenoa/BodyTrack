@@ -7,6 +7,7 @@ app.use(cors());
 app.use(express.json());
 
 const User = require(__dirname + '/models/User');
+const profileController = require('./src/Perfil/profile_controller');
 
 
 app.post('/register', async (req, res) => {
@@ -27,6 +28,45 @@ app.post('/register', async (req, res) => {
     res.status(500).json({ message: 'Error al registrar usuario' });
   }
 });
+app.get('/profile/:email', profileController.getUserByEmail);
+app.put('/profile/:id', profileController.updateUser);
+
+app.post('/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Verifica que se reciban ambos campos
+    if (!email || !password) {
+      return res.status(400).json({ message: 'Correo y contraseña son obligatorios' });
+    }
+
+    // Busca al usuario por correo
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(401).json({ message: 'Usuario no encontrado' });
+    }
+
+    // Compara contraseñas (por ahora sin encriptar)
+    if (user.password !== password) {
+      return res.status(401).json({ message: 'Contraseña incorrecta' });
+    }
+
+    // Inicio de sesión exitoso
+    res.status(200).json({
+      message: 'Inicio de sesión exitoso',
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email
+      }
+    });
+  } catch (error) {
+    console.error('Error en login:', error);
+    res.status(500).json({ message: 'Error en el servidor' });
+  }
+});
+
 
 
 // Conexión a MongoDB Atlas
