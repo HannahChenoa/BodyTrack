@@ -9,6 +9,10 @@ app.use(express.json());
 const User = require(__dirname + '/models/User');
 const profileController = require('./src/Perfil/profile_controller');
 
+const adminRoutes = require('./src/Admin/admin_controller'); // <-- Ajusta si la ruta es distinta
+app.use('/admin', adminRoutes);
+
+
 
 app.post('/register', async (req, res) => {
   try {

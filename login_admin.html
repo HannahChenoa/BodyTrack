@@ -44,16 +44,38 @@
   <!-- Script para redirigir al perfil de admin -->
   <script>
     const adminLoginForm = document.getElementById('adminLoginForm');
-
-    adminLoginForm.addEventListener('submit', function(e) {
-      e.preventDefault(); // Evitar que mande submit real
-
-      // Aquí podrías validar si quieres (por ahora dejamos acceso libre)
-
-      // Redirigir manualmente al perfil de ejercicios
-      window.location.href = "./perfil_ejercicios.html";
+  
+    adminLoginForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+  
+      const email = document.getElementById('adminEmail').value;
+      const password = document.getElementById('adminPassword').value;
+  
+      try {
+        const response = await fetch('http://localhost:3000/admin/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email, password })
+        });
+  
+        const data = await response.json();
+  
+        if (response.ok) {
+          // Guardar en localStorage (opcional)
+          localStorage.setItem('adminEmail', email);
+          window.location.href = './perfil_ejercicios.html';
+        } else {
+          alert(data.message || 'Error al iniciar sesión');
+        }
+      } catch (error) {
+        console.error('Error al hacer login:', error);
+        alert('Ocurrió un error al conectar con el servidor');
+      }
     });
   </script>
+  
 
 </body>
 </html>
