@@ -5,9 +5,16 @@ const cors = require('cors');
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(historyRoutes);
+app.use(ejerciciosRoutes);
+
 
 const User = require(__dirname + '/models/User');
 const profileController = require('./src/Perfil/profile_controller');
+const historyRoutes = require('./src/Historial/manager');
+const ejerciciosRoutes = require('./src/Perfil_Ejercicios/manager');
+
+
 
 
 app.post('/register', async (req, res) => {

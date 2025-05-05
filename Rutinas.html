@@ -40,6 +40,19 @@
     <button type="button" class="btn btn-primary" onclick="mostrarSeccion('pantorrillas')">Pantorrillas</button>
   </div>
 
+  <div class="card shadow p-4 mt-4">
+    <h4>Rutina personalizada</h4>
+    <div class="mb-3">
+      <label for="nombreRutina" class="form-label">Nombre de la rutina</label>
+      <input type="text" id="nombreRutina" class="form-control" placeholder="Ej: Rutina de espalda y brazos">
+    </div>
+    <ul id="rutinaSeleccionada" class="list-group mb-3"></ul>
+    <div class="d-grid">
+      <button class="btn btn-success" onclick="guardarRutina()">Guardar rutina en historial</button>
+    </div>
+  </div>
+  
+
   <!-- Secciones (cada una oculta al inicio) -->
   <div class="card shadow p-4 seccion" id="hombros" style="display:none;">
     <h2 class="text-center mb-4">Rutinas - Hombros</h2>
@@ -66,8 +79,9 @@
         <h5>Press de Banca</h5>
         <p>Trabaja el pecho medio de manera efectiva.</p>
         <small>Series: 4 | Repeticiones: 10-12</small><br>
-        <a href="https://www.youtube.com/watch?v=rT7DgCr-3pg" target="_blank">Ver video explicativo</a>
-      </div>
+        <a href="https://www.youtube.com/watch?v=rT7DgCr-3pg" target="_blank">Ver video explicativo</a><br>
+        <button class="btn btn-sm btn-outline-primary mt-2" onclick="agregarEjercicio('Press de Banca', '4x10', 'No especificado')">Agregar a rutina</button>
+      </div>      
       <div class="list-group-item">
         <h5>Aperturas con Mancuernas</h5>
         <p>Excelente para estiramiento y activación muscular del pecho.</p>
@@ -204,6 +218,108 @@
       }
     };
   </script>
+  <script>
+    let rutina = [];
+  
+    function agregarEjercicio(nombre, repeticiones, peso) {
+      rutina.push({ nombre, repeticiones, peso });
+  
+      const lista = document.getElementById('rutinaSeleccionada');
+      const item = document.createElement('li');
+      item.className = 'list-group-item';
+      item.innerText = `${nombre} - ${repeticiones} - ${peso}`;
+      lista.appendChild(item);
+    }
+  
+    async function guardarRutina() {
+      const user = JSON.parse(localStorage.getItem('user'));
+      const nombreRutina = document.getElementById('nombreRutina').value.trim();
+  
+      if (!user) {
+        alert('Debes iniciar sesión');
+        return;
+      }
+      if (!nombreRutina) {
+        alert('Ponle un nombre a tu rutina');
+        return;
+      }
+      if (rutina.length === 0) {
+        alert('Agrega al menos un ejercicio');
+        return;
+      }
+  
+      const nuevaRutina = {
+        userId: user.id,
+        nombreRutina,
+        fecha: new Date().toISOString().split('T')[0],
+        ejercicios: rutina
+      };
+  
+      try {
+        const res = await fetch('/api/history', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(nuevaRutina)
+        });
+  
+        const data = await res.json();
+        if (res.ok) {
+          alert('✅ Rutina guardada exitosamente');
+          window.location.href = 'historial.html';
+        } else {
+          alert('❌ Error: ' + data.message);
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Error al guardar la rutina');
+      }
+    }
+  </script>
+  <script type="module">
+    import { agregarEjercicio } from './src/Rutinas/controller.js';
+  
+    async function cargarEjercicios() {
+      const res = await fetch('/api/ejercicios');
+      const ejercicios = await res.json();
+  
+      const secciones = {
+        'Pecho': 'pecho',
+        'Espalda': 'espalda',
+        'Hombros': 'hombros',
+        'Piernas': 'piernas',
+        'Brazos': 'brazos',
+        'Abdomen': 'abdomen',
+        'Glúteos': 'gluteos',
+        'Pantorrillas': 'pantorrillas'
+      };
+  
+      ejercicios.forEach(ej => {
+        const seccionId = secciones[ej.musculo];
+        if (!seccionId) return;
+  
+        const seccion = document.getElementById(seccionId);
+        const contenedor = seccion.querySelector('.list-group');
+  
+        const div = document.createElement('div');
+        div.className = 'list-group-item';
+        div.innerHTML = `
+          <h5>${ej.nombre}</h5>
+          <p>${ej.descripcion}</p>
+          <small>Series: 4 | Repeticiones: 10-12</small><br>
+          <a href="${ej.link}" target="_blank">Ver video</a><br>
+          <button class="btn btn-sm btn-outline-primary mt-2"
+            onclick="agregarEjercicio('${ej.nombre}', '4x10', 'No especificado')">
+            Agregar a rutina
+          </button>
+        `;
+        contenedor.appendChild(div);
+      });
+    }
+  
+    cargarEjercicios();
+  </script>
+  
+  
 
 </body>
 </html>
