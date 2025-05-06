@@ -54,6 +54,18 @@ router.post('/api/history', async (req, res) => {
       res.status(500).json({ message: 'Error al guardar rutina' });
     }
   });
+
+  router.delete('/api/history/:id', async (req, res) => {
+    try {
+      const { id } = req.params;
+      await History.findByIdAndDelete(id);
+      res.json({ message: 'Rutina eliminada correctamente' });
+    } catch (err) {
+      console.error('Error al eliminar rutina:', err);
+      res.status(500).json({ message: 'Error al eliminar rutina' });
+    }
+  });
+  
   
 
 module.exports = router;

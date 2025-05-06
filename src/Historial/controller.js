@@ -39,6 +39,34 @@ document.addEventListener('DOMContentLoaded', async () => {
         `;
       });
 
+      // 🔥 Botón para eliminar esta rutina
+      const botonEliminar = document.createElement('button');
+      botonEliminar.className = 'btn btn-sm btn-danger mt-3';
+      botonEliminar.textContent = 'Eliminar rutina';
+
+      botonEliminar.onclick = async () => {
+        if (!confirm('¿Seguro que quieres eliminar esta rutina?')) return;
+
+        try {
+          const res = await fetch(`/api/history/${rutina._id}`, {
+            method: 'DELETE'
+          });
+
+          const data = await res.json();
+
+          if (res.ok) {
+            alert('✅ Rutina eliminada');
+            columna.remove();
+          } else {
+            alert('❌ Error: ' + data.message);
+          }
+        } catch (err) {
+          console.error(err);
+          alert('Error al eliminar rutina');
+        }
+      };
+
+      cuerpo.appendChild(botonEliminar);
       tarjeta.appendChild(cuerpo);
       columna.appendChild(tarjeta);
       contenedor.appendChild(columna);
