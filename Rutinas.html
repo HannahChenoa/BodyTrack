@@ -93,6 +93,10 @@
 
     async function guardarRutina() {
       const user = JSON.parse(localStorage.getItem('user'));
+      if (!user) {
+        alert('Debes iniciar sesión');
+        return;
+      }
       const nombreRutina = document.getElementById('nombreRutina').value.trim();
 
       if (!nombreRutina || rutina.length === 0) {

@@ -111,11 +111,8 @@
         if (response.ok) {
           alert(data.message);
   
-          // Guarda datos si los necesitas
-          localStorage.setItem('userId', data.user.id);
-          localStorage.setItem('userName', data.user.name);
-          localStorage.setItem('userEmail', data.user.email); // ← esta es la línea nueva
-  
+          localStorage.setItem('user', JSON.stringify(data.user));
+
           window.location.href = './home.html';
         } else {
           alert(data.message || 'Credenciales incorrectas');
