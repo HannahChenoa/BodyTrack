@@ -92,13 +92,9 @@
     }
 
     async function guardarRutina() {
-      //const user = JSON.parse(localStorage.getItem('user'));
+      const user = JSON.parse(localStorage.getItem('user'));
       const nombreRutina = document.getElementById('nombreRutina').value.trim();
 
-      /*if (!user) {
-        alert('Debes iniciar sesión');
-        return;
-      }*/
       if (!nombreRutina || rutina.length === 0) {
         alert('Completa los datos de la rutina');
         return;

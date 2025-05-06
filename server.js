@@ -4,12 +4,14 @@ const cors = require('cors');
 const historyRoutes = require('./src/Historial/manager');
 const ejerciciosRoutes = require('./src/Perfil_Ejercicios/manager'); // <- Mover esta línea aquí
 const app = express();
+const path = require('path');
 
 
 app.use(cors());
 app.use(express.json());
 app.use(historyRoutes);
 app.use(ejerciciosRoutes);
+app.use(express.static(path.join(__dirname)));
 
 
 const User = require(__dirname + '/models/User');
