@@ -40,6 +40,7 @@
     <button type="button" class="btn btn-primary" onclick="mostrarSeccion('pantorrillas')">Pantorrillas</button>
   </div>
 
+  <!-- Rutina personalizada -->
   <div class="card shadow p-4 mt-4">
     <h4>Rutina personalizada</h4>
     <div class="mb-3">
@@ -51,156 +52,21 @@
       <button class="btn btn-success" onclick="guardarRutina()">Guardar rutina en historial</button>
     </div>
   </div>
-  
 
-  <!-- Secciones (cada una oculta al inicio) -->
-  <div class="card shadow p-4 seccion" id="hombros" style="display:none;">
-    <h2 class="text-center mb-4">Rutinas - Hombros</h2>
-    <div class="list-group">
-      <div class="list-group-item">
-        <h5>Press Militar con Barra</h5>
-        <p>Trabaja deltoides frontales y laterales.</p>
-        <small>Series: 4 | Repeticiones: 8-10</small><br>
-        <a href="https://www.youtube.com/watch?v=B-aVuyhvLHU" target="_blank">Ver video explicativo</a>
-      </div>
-      <div class="list-group-item">
-        <h5>Elevaciones Laterales</h5>
-        <p>Aíslan el deltoide lateral para mejorar la amplitud.</p>
-        <small>Series: 3 | Repeticiones: 12-15</small><br>
-        <a href="https://www.youtube.com/watch?v=kDqklk1ZESo" target="_blank">Ver video explicativo</a>
-      </div>
-    </div>
-  </div>
+  <!-- Secciones dinámicas vacías -->
+  <div class="card shadow p-4 seccion" id="hombros" style="display:none;"><h2 class="text-center mb-4">Hombros</h2><div class="list-group"></div></div>
+  <div class="card shadow p-4 seccion" id="pecho" style="display:none;"><h2 class="text-center mb-4">Pecho</h2><div class="list-group"></div></div>
+  <div class="card shadow p-4 seccion" id="espalda" style="display:none;"><h2 class="text-center mb-4">Espalda</h2><div class="list-group"></div></div>
+  <div class="card shadow p-4 seccion" id="brazos" style="display:none;"><h2 class="text-center mb-4">Brazos</h2><div class="list-group"></div></div>
+  <div class="card shadow p-4 seccion" id="piernas" style="display:none;"><h2 class="text-center mb-4">Piernas</h2><div class="list-group"></div></div>
+  <div class="card shadow p-4 seccion" id="abdomen" style="display:none;"><h2 class="text-center mb-4">Abdomen</h2><div class="list-group"></div></div>
+  <div class="card shadow p-4 seccion" id="gluteos" style="display:none;"><h2 class="text-center mb-4">Glúteos</h2><div class="list-group"></div></div>
+  <div class="card shadow p-4 seccion" id="pantorrillas" style="display:none;"><h2 class="text-center mb-4">Pantorrillas</h2><div class="list-group"></div></div>
 
-  <div class="card shadow p-4 seccion" id="pecho" style="display:none;">
-    <h2 class="text-center mb-4">Rutinas - Pecho</h2>
-    <div class="list-group">
-      <div class="list-group-item">
-        <h5>Press de Banca</h5>
-        <p>Trabaja el pecho medio de manera efectiva.</p>
-        <small>Series: 4 | Repeticiones: 10-12</small><br>
-        <a href="https://www.youtube.com/watch?v=rT7DgCr-3pg" target="_blank">Ver video explicativo</a><br>
-        <button class="btn btn-sm btn-outline-primary mt-2" onclick="agregarEjercicio('Press de Banca', '4x10', 'No especificado')">Agregar a rutina</button>
-      </div>      
-      <div class="list-group-item">
-        <h5>Aperturas con Mancuernas</h5>
-        <p>Excelente para estiramiento y activación muscular del pecho.</p>
-        <small>Series: 3 | Repeticiones: 15</small><br>
-        <a href="https://www.youtube.com/watch?v=eozdVDA78K0" target="_blank">Ver video explicativo</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="card shadow p-4 seccion" id="espalda" style="display:none;">
-    <h2 class="text-center mb-4">Rutinas - Espalda</h2>
-    <div class="list-group">
-      <div class="list-group-item">
-        <h5>Peso Muerto</h5>
-        <p>Ejercicio compuesto que trabaja toda la cadena posterior.</p>
-        <small>Series: 4 | Repeticiones: 6-8</small><br>
-        <a href="https://www.youtube.com/watch?v=ytGaGIn3SjE" target="_blank">Ver video explicativo</a>
-      </div>
-      <div class="list-group-item">
-        <h5>Dominadas</h5>
-        <p>Fortalece dorsales, romboides y brazos.</p>
-        <small>Series: 3 | Repeticiones: al fallo</small><br>
-        <a href="https://www.youtube.com/watch?v=eGo4IYlbE5g" target="_blank">Ver video explicativo</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="card shadow p-4 seccion" id="brazos" style="display:none;">
-    <h2 class="text-center mb-4">Rutinas - Brazos</h2>
-    <div class="list-group">
-      <div class="list-group-item">
-        <h5>Curl con Barra</h5>
-        <p>Ejercicio base para bíceps.</p>
-        <small>Series: 4 | Repeticiones: 10</small><br>
-        <a href="https://www.youtube.com/watch?v=kwG2ipFRgfo" target="_blank">Ver video explicativo</a>
-      </div>
-      <div class="list-group-item">
-        <h5>Extensión de Tríceps en Polea Alta</h5>
-        <p>Ideal para trabajar cabeza larga del tríceps.</p>
-        <small>Series: 3 | Repeticiones: 12-15</small><br>
-        <a href="https://www.youtube.com/watch?v=vB5OHsJ3EME" target="_blank">Ver video explicativo</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="card shadow p-4 seccion" id="piernas" style="display:none;">
-    <h2 class="text-center mb-4">Rutinas - Piernas</h2>
-    <div class="list-group">
-      <div class="list-group-item">
-        <h5>Sentadillas con Barra</h5>
-        <p>Desarrolla cuádriceps, glúteos y core.</p>
-        <small>Series: 4 | Repeticiones: 8-10</small><br>
-        <a href="https://www.youtube.com/watch?v=Dy28eq2PjcM" target="_blank">Ver video explicativo</a>
-      </div>
-      <div class="list-group-item">
-        <h5>Prensa de Piernas</h5>
-        <p>Aumenta fuerza en cuádriceps y glúteos.</p>
-        <small>Series: 4 | Repeticiones: 12</small><br>
-        <a href="https://www.youtube.com/watch?v=IZxyjW7MPJQ" target="_blank">Ver video explicativo</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="card shadow p-4 seccion" id="abdomen" style="display:none;">
-    <h2 class="text-center mb-4">Rutinas - Abdomen</h2>
-    <div class="list-group">
-      <div class="list-group-item">
-        <h5>Crunch en Máquina</h5>
-        <p>Aislamiento del recto abdominal.</p>
-        <small>Series: 3 | Repeticiones: 15</small><br>
-        <a href="https://www.youtube.com/watch?v=4Rr7A1mP8Ec" target="_blank">Ver video explicativo</a>
-      </div>
-      <div class="list-group-item">
-        <h5>Elevaciones de Piernas Colgado</h5>
-        <p>Trabaja abdominales inferiores.</p>
-        <small>Series: 3 | Repeticiones: 12-15</small><br>
-        <a href="https://www.youtube.com/watch?v=tKjcgfu44sI" target="_blank">Ver video explicativo</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="card shadow p-4 seccion" id="gluteos" style="display:none;">
-    <h2 class="text-center mb-4">Rutinas - Glúteos</h2>
-    <div class="list-group">
-      <div class="list-group-item">
-        <h5>Hip Thrust con Barra</h5>
-        <p>Excelente para activar y desarrollar los glúteos.</p>
-        <small>Series: 4 | Repeticiones: 10-12</small><br>
-        <a href="https://www.youtube.com/watch?v=LM8XHLYJoYs" target="_blank">Ver video explicativo</a>
-      </div>
-      <div class="list-group-item">
-        <h5>Patada de Glúteo en Polea</h5>
-        <p>Aíslan la parte superior del glúteo.</p>
-        <small>Series: 3 | Repeticiones: 15 por pierna</small><br>
-        <a href="https://www.youtube.com/watch?v=DJbBUcT5XZE" target="_blank">Ver video explicativo</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="card shadow p-4 seccion" id="pantorrillas" style="display:none;">
-    <h2 class="text-center mb-4">Rutinas - Pantorrillas</h2>
-    <div class="list-group">
-      <div class="list-group-item">
-        <h5>Elevaciones de Talones de Pie</h5>
-        <p>Trabaja el gastrocnemio.</p>
-        <small>Series: 4 | Repeticiones: 20</small><br>
-        <a href="https://www.youtube.com/watch?v=YMmgqO8Jo-k" target="_blank">Ver video explicativo</a>
-      </div>
-      <div class="list-group-item">
-        <h5>Elevaciones Sentado con Peso</h5>
-        <p>Aísla el sóleo.</p>
-        <small>Series: 4 | Repeticiones: 20</small><br>
-        <a href="https://www.youtube.com/watch?v=YMmgqO8Jo-k" target="_blank">Ver video explicativo</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Script -->
+  <!-- Scripts -->
   <script>
+    let rutina = [];
+
     function mostrarSeccion(id) {
       document.querySelectorAll('.seccion').forEach(sec => sec.style.display = 'none');
       const seccion = document.getElementById(id.toLowerCase());
@@ -209,62 +75,52 @@
       }
     }
 
-    // Mostrar zona automáticamente al cargar
-    window.onload = function() {
-      const params = new URLSearchParams(window.location.search);
-      const zona = params.get('zona');
-      if (zona) {
-        mostrarSeccion(zona.toLowerCase());
-      }
-    };
-  </script>
-  <script>
-    let rutina = [];
-  
-    function agregarEjercicio(nombre, repeticiones, peso) {
+    function agregarEjercicio(nombre) {
+      const repeticiones = prompt(`¿Cuántas repeticiones para "${nombre}"?`);
+      if (!repeticiones) return;
+
+      const peso = prompt(`¿Qué peso usarás para "${nombre}"?`);
+      if (!peso) return;
+
       rutina.push({ nombre, repeticiones, peso });
-  
+
       const lista = document.getElementById('rutinaSeleccionada');
       const item = document.createElement('li');
       item.className = 'list-group-item';
       item.innerText = `${nombre} - ${repeticiones} - ${peso}`;
       lista.appendChild(item);
     }
-    //CORREGIR 
+
     async function guardarRutina() {
       //const user = JSON.parse(localStorage.getItem('user'));
       const nombreRutina = document.getElementById('nombreRutina').value.trim();
-  
+
       /*if (!user) {
         alert('Debes iniciar sesión');
         return;
       }*/
-      if (!nombreRutina) {
-        alert('Ponle un nombre a tu rutina');
+      if (!nombreRutina || rutina.length === 0) {
+        alert('Completa los datos de la rutina');
         return;
       }
-      if (rutina.length === 0) {
-        alert('Agrega al menos un ejercicio');
-        return;
-      }
-  
+
       const nuevaRutina = {
         userId: user.id,
         nombreRutina,
         fecha: new Date().toISOString().split('T')[0],
         ejercicios: rutina
       };
-  
+
       try {
         const res = await fetch('/api/history', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(nuevaRutina)
         });
-  
+
         const data = await res.json();
         if (res.ok) {
-          alert('✅ Rutina guardada exitosamente');
+          alert('✅ Rutina guardada');
           window.location.href = 'historial.html';
         } else {
           alert('❌ Error: ' + data.message);
@@ -274,14 +130,11 @@
         alert('Error al guardar la rutina');
       }
     }
-  </script>
-  <script type="module">
-    import { agregarEjercicio } from './src/Rutinas/controller.js';
-  
+
     async function cargarEjercicios() {
       const res = await fetch('/api/ejercicios');
       const ejercicios = await res.json();
-  
+
       const secciones = {
         'Pecho': 'pecho',
         'Espalda': 'espalda',
@@ -292,34 +145,37 @@
         'Glúteos': 'gluteos',
         'Pantorrillas': 'pantorrillas'
       };
-  
+
       ejercicios.forEach(ej => {
         const seccionId = secciones[ej.musculo];
         if (!seccionId) return;
-  
+
         const seccion = document.getElementById(seccionId);
         const contenedor = seccion.querySelector('.list-group');
-  
+
         const div = document.createElement('div');
         div.className = 'list-group-item';
         div.innerHTML = `
           <h5>${ej.nombre}</h5>
           <p>${ej.descripcion}</p>
-          <small>Series: 4 | Repeticiones: 10-12</small><br>
+          <small>Músculo: ${ej.musculo}</small><br>
           <a href="${ej.link}" target="_blank">Ver video</a><br>
           <button class="btn btn-sm btn-outline-primary mt-2"
-            onclick="agregarEjercicio('${ej.nombre}', '4x10', 'No especificado')">
+            onclick="agregarEjercicio('${ej.nombre}')">
             Agregar a rutina
           </button>
         `;
         contenedor.appendChild(div);
       });
     }
-  
-    cargarEjercicios();
+
+    window.onload = function () {
+      const params = new URLSearchParams(window.location.search);
+      const zona = params.get('zona');
+      if (zona) mostrarSeccion(zona.toLowerCase());
+      cargarEjercicios();
+    };
   </script>
-  
-  
 
 </body>
 </html>
