@@ -230,15 +230,15 @@
       item.innerText = `${nombre} - ${repeticiones} - ${peso}`;
       lista.appendChild(item);
     }
-  
+    //CORREGIR 
     async function guardarRutina() {
-      const user = JSON.parse(localStorage.getItem('user'));
+      //const user = JSON.parse(localStorage.getItem('user'));
       const nombreRutina = document.getElementById('nombreRutina').value.trim();
   
-      if (!user) {
+      /*if (!user) {
         alert('Debes iniciar sesión');
         return;
-      }
+      }*/
       if (!nombreRutina) {
         alert('Ponle un nombre a tu rutina');
         return;
