@@ -10,11 +10,16 @@ const historySchema = new mongoose.Schema({
   ejercicios: [
     {
       nombre: String,
-      repeticiones: String,
-      peso: String
+      series: [
+        {
+          repeticiones: String,
+          peso: String
+        }
+      ]
     }
   ]
 });
+
 
 const History = mongoose.model('History', historySchema, 'history'); // 'history' = nombre de la colección en MongoDB
 

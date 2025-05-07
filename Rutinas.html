@@ -63,14 +63,32 @@
   <div class="card shadow p-4 seccion" id="gluteos" style="display:none;"><h2 class="text-center mb-4">Glúteos</h2><div class="list-group"></div></div>
   <div class="card shadow p-4 seccion" id="pantorrillas" style="display:none;"><h2 class="text-center mb-4">Pantorrillas</h2><div class="list-group"></div></div>
 
+  <!-- Modal para agregar series -->
+  <div class="modal fade" id="modalSeries" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Agregar series para <span id="nombreEjercicioModal"></span></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div id="seriesContainer"></div>
+          <button class="btn btn-outline-primary mt-2" onclick="agregarFilaSerie()">➕ Agregar serie</button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-success" onclick="guardarSeries()">Agregar a rutina</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Scripts -->
   <script>
     function extraerIDYoutube(url) {
       const match = url.match(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/);
       return match ? match[1] : null;
     }
-
-    let rutina = [];
 
     function mostrarSeccion(id) {
       document.querySelectorAll('.seccion').forEach(sec => sec.style.display = 'none');
@@ -80,21 +98,82 @@
       }
     }
 
+    let ejercicioActual = '';
+    let rutina = [];
+
     function agregarEjercicio(nombre) {
-      const repeticiones = prompt(`¿Cuántas repeticiones para "${nombre}"?`);
-      if (!repeticiones) return;
-
-      const peso = prompt(`¿Qué peso usarás para "${nombre}"?`);
-      if (!peso) return;
-
-      rutina.push({ nombre, repeticiones, peso });
-
-      const lista = document.getElementById('rutinaSeleccionada');
-      const item = document.createElement('li');
-      item.className = 'list-group-item';
-      item.innerText = `${nombre} - ${repeticiones} - ${peso}`;
-      lista.appendChild(item);
+      ejercicioActual = nombre;
+      document.getElementById('nombreEjercicioModal').textContent = nombre;
+      document.getElementById('seriesContainer').innerHTML = '';
+      agregarFilaSerie(); // crea una fila por default
+      const modal = new bootstrap.Modal(document.getElementById('modalSeries'));
+      modal.show();
     }
+
+    function agregarFilaSerie() {
+      const container = document.getElementById('seriesContainer');
+      const index = container.children.length + 1;
+
+      const row = document.createElement('div');
+      row.className = 'row mb-2';
+      row.innerHTML = `
+        <div class="col-5">
+          <input type="number" class="form-control" placeholder="Repeticiones" min="1" required>
+        </div>
+        <div class="col-5">
+          <input type="text" class="form-control" placeholder="Peso (ej. 40kg)" required>
+        </div>
+        <div class="col-2">
+          <button class="btn btn-outline-danger" onclick="this.parentElement.parentElement.remove()">✖</button>
+        </div>
+      `;
+      container.appendChild(row);
+    }
+
+    function guardarSeries() {
+      const filas = document.querySelectorAll('#seriesContainer .row');
+      const series = [];
+
+      for (const fila of filas) {
+        const inputs = fila.querySelectorAll('input');
+        const rep = inputs[0]?.value;
+        const peso = inputs[1]?.value;
+
+        if (!rep || !peso) {
+          alert('Completa todas las series');
+          return;
+        }
+
+        series.push({ repeticiones: rep, peso });
+      }
+
+      // ⛔️ Elimina posibles duplicados
+      rutina = rutina.filter(e => e.nombre !== ejercicioActual);
+
+      // ✅ Inserta correctamente el ejercicio con series
+      rutina.push({
+        nombre: ejercicioActual,
+        series
+      });
+
+      actualizarVistaRutina();
+      bootstrap.Modal.getInstance(document.getElementById('modalSeries')).hide();
+    }
+
+    function actualizarVistaRutina() {
+      const lista = document.getElementById('rutinaSeleccionada');
+      lista.innerHTML = '';
+
+      rutina.forEach(ej => {
+        const item = document.createElement('li');
+        item.className = 'list-group-item';
+        item.innerHTML = `<strong>${ej.nombre}</strong><br>` + ej.series.map(
+          (s, i) => `Serie ${i + 1}: ${s.repeticiones} reps - ${s.peso}`
+        ).join('<br>');
+        lista.appendChild(item);
+      });
+    }
+
 
     async function guardarRutina() {
       const user = JSON.parse(localStorage.getItem('user'));
@@ -108,6 +187,7 @@
         alert('Completa los datos de la rutina');
         return;
       }
+      console.log("Rutina final:", rutina); // 👈 agrega esto aquí
 
       const nuevaRutina = {
         userId: user.id,
@@ -187,6 +267,8 @@
       cargarEjercicios();
     };
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 
 </body>
 </html>

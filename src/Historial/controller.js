@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     historial.forEach((rutina) => {
+      console.log('Ejercicios:', rutina.ejercicios);
       const columna = document.createElement('div');
       columna.className = 'col-md-6 mb-4';
 
@@ -31,13 +32,22 @@ document.addEventListener('DOMContentLoaded', async () => {
       cuerpo.innerHTML += `<p class="text-muted"><small>Fecha: ${rutina.fecha}</small></p>`;
 
       rutina.ejercicios.forEach((ej) => {
-        cuerpo.innerHTML += `
-          <hr>
-          <p class="mb-1"><strong>${ej.nombre}</strong></p>
-          <p class="mb-1">Repeticiones: ${ej.repeticiones}</p>
-          <p class="mb-1">Peso: ${ej.peso}</p>
-        `;
-      });
+        cuerpo.innerHTML += `<hr><p class="mb-1"><strong>${ej.nombre}</strong></p>`;
+      
+        if (ej.series && Array.isArray(ej.series) && ej.series.length > 0) {
+          ej.series.forEach((serie, i) => {
+            cuerpo.innerHTML += `
+              <p class="mb-1">Serie ${i + 1}: ${serie.repeticiones} reps - ${serie.peso}</p>
+            `;
+          });
+        } else {
+          cuerpo.innerHTML += `
+            <p class="mb-1">Repeticiones: ${ej.repeticiones || '-'}</p>
+            <p class="mb-1">Peso: ${ej.peso || '-'}</p>
+          `;
+        }
+      });   
+      
 
       // 🔥 Botón para eliminar esta rutina
       const botonEliminar = document.createElement('button');
