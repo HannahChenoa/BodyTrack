@@ -65,6 +65,11 @@
 
   <!-- Scripts -->
   <script>
+    function extraerIDYoutube(url) {
+      const match = url.match(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/);
+      return match ? match[1] : null;
+    }
+
     let rutina = [];
 
     function mostrarSeccion(id) {
@@ -158,8 +163,14 @@
         div.innerHTML = `
           <h5>${ej.nombre}</h5>
           <p>${ej.descripcion}</p>
-          <small>Músculo: ${ej.musculo}</small><br>
+          <small>Musculo: ${ej.musculo}</small><br>
           <a href="${ej.link}" target="_blank">Ver video</a><br>
+          ${
+            ej.link && extraerIDYoutube(ej.link)
+              ? `<img src="https://img.youtube.com/vi/${extraerIDYoutube(ej.link)}/0.jpg" style="max-width: 250px; margin-top: 5px;" />`
+              : ''
+          }
+          <br>
           <button class="btn btn-sm btn-outline-primary mt-2"
             onclick="agregarEjercicio('${ej.nombre}')">
             Agregar a rutina

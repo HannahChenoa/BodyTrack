@@ -81,6 +81,12 @@
       document.getElementById('preview').style.display = 'none';
     }
 
+    function extraerIDYoutube(url) {
+      const match = url.match(/(?:https?:\/\/)?(?:www\.)?youtu(?:\.be|be\.com)\/(?:watch\?v=)?([^&\s]{11})/);
+      return match ? match[1] : null;
+    }
+
+
     function actualizarLista() {
       const lista = document.getElementById('listaEjercicios');
       lista.innerHTML = '';
@@ -94,7 +100,11 @@
             <small>Músculo: ${ejercicio.musculo}</small><br>
             <small>${ejercicio.descripcion}</small><br>
             <small>Video: <a href="${ejercicio.link}" target="_blank">${ejercicio.link}</a></small><br>
-            ${ejercicio.imagenURL ? `<img src="${ejercicio.imagenURL}" style="max-width: 100px; margin-top: 5px;" />` : ''}
+            ${
+              ejercicio.link && extraerIDYoutube(ejercicio.link)
+                ? `<img src="https://img.youtube.com/vi/${extraerIDYoutube(ejercicio.link)}/0.jpg" style="max-width: 100px; margin-top: 5px;" />`
+                : ''
+            }
           </div>
           <div>
             <button class="btn btn-sm btn-warning me-2" onclick="editarEjercicio(${index})">Editar</button>
