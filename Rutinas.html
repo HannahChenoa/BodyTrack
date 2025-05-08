@@ -73,7 +73,7 @@
         </div>
         <div class="modal-body">
           <div id="seriesContainer"></div>
-          <button class="btn btn-outline-primary mt-2" onclick="agregarFilaSerie()">➕ Agregar serie</button>
+          <button class="btn btn-outline-primary mt-2" onclick="agregarFilaSerie()"> Agregar serie</button>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -112,16 +112,20 @@
 
     function agregarFilaSerie() {
       const container = document.getElementById('seriesContainer');
-      const index = container.children.length + 1;
-
       const row = document.createElement('div');
       row.className = 'row mb-2';
       row.innerHTML = `
-        <div class="col-5">
+        <div class="col-4">
           <input type="number" class="form-control" placeholder="Repeticiones" min="1" required>
         </div>
-        <div class="col-5">
-          <input type="text" class="form-control" placeholder="Peso (ej. 40kg)" required>
+        <div class="col-4">
+          <input type="text" class="form-control" placeholder="Peso (ej. 40)" required>
+        </div>
+        <div class="col-2">
+          <select class="form-select">
+            <option value="kg">kg</option>
+            <option value="lbs">lbs</option>
+          </select>
         </div>
         <div class="col-2">
           <button class="btn btn-outline-danger" onclick="this.parentElement.parentElement.remove()">✖</button>
@@ -129,6 +133,7 @@
       `;
       container.appendChild(row);
     }
+
 
     function guardarSeries() {
       const filas = document.querySelectorAll('#seriesContainer .row');
@@ -138,13 +143,17 @@
         const inputs = fila.querySelectorAll('input');
         const rep = inputs[0]?.value;
         const peso = inputs[1]?.value;
+        const unidad = fila.querySelector('select')?.value || 'kg';
+
 
         if (!rep || !peso) {
           alert('Completa todas las series');
           return;
         }
 
-        series.push({ repeticiones: rep, peso });
+        series.push({ repeticiones: rep, peso, unidad });
+        console.log('Serie guardada:', { repeticiones: rep, peso, unidad });
+
       }
 
       // ⛔️ Elimina posibles duplicados
@@ -168,7 +177,7 @@
         const item = document.createElement('li');
         item.className = 'list-group-item';
         item.innerHTML = `<strong>${ej.nombre}</strong><br>` + ej.series.map(
-          (s, i) => `Serie ${i + 1}: ${s.repeticiones} reps - ${s.peso}`
+          (s, i) => `Serie ${i + 1}: ${s.repeticiones} reps - ${s.peso} ${s.unidad || ''}`
         ).join('<br>');
         lista.appendChild(item);
       });

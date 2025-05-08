@@ -36,8 +36,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       
         if (ej.series && Array.isArray(ej.series) && ej.series.length > 0) {
           ej.series.forEach((serie, i) => {
+            const unidad = serie.unidad ? serie.unidad.toLowerCase() : 'kg';
             cuerpo.innerHTML += `
-              <p class="mb-1">Serie ${i + 1}: ${serie.repeticiones} reps - ${serie.peso}</p>
+              <p class="mb-1">Serie ${i + 1}: ${serie.repeticiones} reps - ${serie.peso} ${unidad}</p>
             `;
           });
         } else {
