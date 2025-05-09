@@ -37,6 +37,22 @@
     .btn-muscle:hover {
       transform: scale(1.1);
     }
+    .card {
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      border: none;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 15px rgba(0, 123, 255, 0.3);
+    }
+
+    .card-img-top {
+      height: 160px;
+      object-fit: contain;
+    }
   </style>
 </head>
 
@@ -73,29 +89,81 @@
   <div class="container mt-5 d-flex flex-column align-items-center">
     <h2 class="mb-4 text-center">Selecciona el grupo muscular que deseas entrenar</h2>
 
-    <!-- Switch para cambiar entre hombre y mujer -->
-    <div class="toggle-container">
-      <label class="form-check-label">Hombre</label>
-      <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" id="genderSwitch">
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+
+      <div class="col" onclick="location.href='Rutinas.html?zona=hombros'">
+        <div class="card h-100 text-center">
+          <img src="./images/hombros.png.webp" class="card-img-top p-2" alt="Hombros">
+          <div class="card-body">
+            <h5 class="card-title">Hombros</h5>
+          </div>
+        </div>
       </div>
-      <label class="form-check-label">Mujer</label>
-    </div>
-
-    <!-- Imagen de cuerpo humano -->
-    <img id="muscleImage" src="./images/hombre.png" alt="Cuerpo" class="muscle-image mb-4">
-
-    <!-- Botones para seleccionar zonas musculares -->
-    <div class="d-flex flex-wrap justify-content-center gap-3">
-      <button onclick="location.href='Rutinas.html?zona=hombros'" class="btn btn-primary m-2">Hombros</button>
-      <button onclick="location.href='Rutinas.html?zona=Pecho'" class="btn btn-primary m-2">Pecho</button>
-      <button onclick="location.href='Rutinas.html?zona=espalda'" class="btn btn-primary m-2">Espalda</button>
-      <button onclick="location.href='Rutinas.html?zona=brazos'" class="btn btn-primary m-2">Brazos</button>
-      <button onclick="location.href='Rutinas.html?zona=piernas'" class="btn btn-primary m-2">Piernas</button>
-      <button onclick="location.href='Rutinas.html?zona=abdomen'" class="btn btn-primary m-2">Abdomen</button>
-      <button onclick="location.href='Rutinas.html?zona=gluteos'" class="btn btn-primary m-2">Glúteos</button>
-      <button onclick="location.href='Rutinas.html?zona=pantorrillas'" class="btn btn-primary m-2">Pantorrillas</button>
-    </div>
+    
+      <div class="col" onclick="location.href='Rutinas.html?zona=pecho'">
+        <div class="card h-100 text-center">
+          <img src="./images/pecho.png.jpg" class="card-img-top p-2" alt="Pecho">
+          <div class="card-body">
+            <h5 class="card-title">Pecho</h5>
+          </div>
+        </div>
+      </div>
+    
+      <div class="col" onclick="location.href='Rutinas.html?zona=espalda'">
+        <div class="card h-100 text-center">
+          <img src="./images/espalda.png.jpg" class="card-img-top p-2" alt="Espalda">
+          <div class="card-body">
+            <h5 class="card-title">Espalda</h5>
+          </div>
+        </div>
+      </div>
+    
+      <div class="col" onclick="location.href='Rutinas.html?zona=brazos'">
+        <div class="card h-100 text-center">
+          <img src="./images/brazos.png.png" class="card-img-top p-2" alt="Brazos">
+          <div class="card-body">
+            <h5 class="card-title">Brazos</h5>
+          </div>
+        </div>
+      </div>
+    
+      <div class="col" onclick="location.href='Rutinas.html?zona=piernas'">
+        <div class="card h-100 text-center">
+          <img src="./images/piernas.png.png" class="card-img-top p-2" alt="Piernas">
+          <div class="card-body">
+            <h5 class="card-title">Piernas</h5>
+          </div>
+        </div>
+      </div>
+    
+      <div class="col" onclick="location.href='Rutinas.html?zona=abdomen'">
+        <div class="card h-100 text-center">
+          <img src="./images/abdomen.png.webp" class="card-img-top p-2" alt="Abdomen">
+          <div class="card-body">
+            <h5 class="card-title">Abdomen</h5>
+          </div>
+        </div>
+      </div>
+    
+      <div class="col" onclick="location.href='Rutinas.html?zona=gluteos'">
+        <div class="card h-100 text-center">
+          <img src="./images/gluteos.png.png" class="card-img-top p-2" alt="Glúteos">
+          <div class="card-body">
+            <h5 class="card-title">Glúteos</h5>
+          </div>
+        </div>
+      </div>
+    
+      <div class="col" onclick="location.href='Rutinas.html?zona=pantorrillas'">
+        <div class="card h-100 text-center">
+          <img src="./images/pantorillas.png.jpg" class="card-img-top p-2" alt="Pantorrillas">
+          <div class="card-body">
+            <h5 class="card-title">Pantorrillas</h5>
+          </div>
+        </div>
+      </div>
+    
+    </div>    
   </div>
 
   <!-- Bootstrap 5 JS -->

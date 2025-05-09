@@ -13,7 +13,8 @@ const historySchema = new mongoose.Schema({
       series: [
         {
           repeticiones: String,
-          peso: String
+          peso: String,
+          unidad: String
         }
       ]
     }

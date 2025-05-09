@@ -212,7 +212,15 @@
           body: JSON.stringify(nuevaRutina)
         });
 
-        const data = await res.json();
+        let data;
+        try {
+          data = await res.json();
+        } catch (jsonErr) {
+          console.error('❌ Error al parsear JSON:', jsonErr);
+          alert('El servidor no devolvió una respuesta válida');
+          return;
+        }
+
         if (res.ok) {
           alert('✅ Rutina guardada');
           window.location.href = 'historial.html';
