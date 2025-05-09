@@ -1,56 +1,132 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    const userId = localStorage.getItem('userId');        // <- agregado
-    const userEmail = localStorage.getItem('userEmail');  // <- correcto
-    const inputName = document.getElementById('nameInput');
-    const inputEmail = document.getElementById('emailInput');
-    const editButton = document.getElementById('editProfileBtn');
-  
-    // Validar que haya sesión
-    if (!userEmail) {
-      alert('No hay usuario autenticado');
-      window.location.href = './login.html';
+  const user = JSON.parse(localStorage.getItem('user'));
+  if (!user) {
+    alert('No hay sesión activa');
+    window.location.href = './login.html';
+    return;
+  }
+
+  const inputName = document.getElementById('nameInput');
+  const inputEmail = document.getElementById('emailInput');
+  const editButton = document.getElementById('btnEditar');
+  const saveButton = document.getElementById('editProfileBtn');
+  const addBtn = document.getElementById('addMeasureBtn');
+  const listaMedidas = document.getElementById('listaMedidas');
+
+  // Cargar datos del usuario
+  try {
+    const res = await fetch(`http://localhost:3000/profile/${user.email}`);
+    const data = await res.json();
+    inputName.value = data.name;
+    inputEmail.value = data.email;
+  } catch (err) {
+    console.error('Error al cargar perfil:', err);
+    alert('No se pudo cargar el perfil');
+  }
+
+  // Cargar medidas
+  async function cargarMedidas() {
+    listaMedidas.innerHTML = '';
+    try {
+      const res = await fetch(`http://localhost:3000/measures/${user.id}`);
+      const data = await res.json();
+      data.medidas.forEach((medida, index) => {
+        const item = document.createElement('li');
+        item.className = 'list-group-item d-flex justify-content-between align-items-center';
+        item.innerHTML = `
+          <span>${medida.parte}: ${medida.valor}</span>
+          <button class="btn btn-sm btn-danger" onclick="eliminarMedida(${index})">✖</button>
+        `;
+        listaMedidas.appendChild(item);
+      });
+    } catch (err) {
+      console.error('Error al cargar medidas:', err);
+    }
+  }
+
+  window.eliminarMedida = async (index) => {
+    try {
+      const res = await fetch(`http://localhost:3000/measures/${user.id}/delete/${index}`, {
+        method: 'DELETE'
+      });
+      const data = await res.json();
+      if (res.ok) {
+        cargarMedidas();
+      } else {
+        alert(data.message || 'No se pudo eliminar');
+      }
+    } catch (err) {
+      console.error('Error al eliminar:', err);
+    }
+  };
+
+  // Guardar perfil
+  saveButton.addEventListener('click', async () => {
+    const newName = inputName.value;
+    const newEmail = inputEmail.value;
+
+    try {
+      const res = await fetch(`http://localhost:3000/profile/${user.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name: newName, email: newEmail })
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        alert('Perfil actualizado');
+        localStorage.setItem('user', JSON.stringify({ ...user, name: newName, email: newEmail }));
+        window.location.reload();
+      } else {
+        alert(data.message || 'Error al actualizar');
+      }
+    } catch (err) {
+      console.error('Error al actualizar perfil:', err);
+    }
+  });
+
+  // Habilitar edición
+  editButton.addEventListener('click', () => {
+    inputName.removeAttribute('readonly');
+    inputEmail.removeAttribute('readonly');
+    saveButton.style.display = 'inline-block';
+    editButton.style.display = 'none';
+  });
+
+  // Agregar medida corporal
+  addBtn.addEventListener('click', async () => {
+    const parte = document.getElementById('parteCuerpo').value.trim();
+    const medida = document.getElementById('medida').value.trim();
+
+    if (!parte || !medida) {
+      alert('Completa ambos campos');
       return;
     }
-  
-    // Cargar datos del usuario
+
     try {
-      const res = await fetch(`http://localhost:3000/profile/${userEmail}`);
+      const res = await fetch(`http://localhost:3000/measures/${user.id}/add`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ parte, valor: `${medida} cm` })
+      });
+
       const data = await res.json();
-  
-      inputName.value = data.name;
-      inputEmail.value = data.email;
-  
-    } catch (err) {
-      console.error('Error al cargar perfil:', err);
-      alert('No se pudo cargar el perfil');
-    }
-  
-    // Editar perfil
-    editButton.addEventListener('click', async () => {
-      const newName = inputName.value;
-      const newEmail = inputEmail.value;
-  
-      try {
-        const res = await fetch(`http://localhost:3000/profile/${userId}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ name: newName, email: newEmail })
-        });
-  
-        const data = await res.json();
-  
-        if (res.ok) {
-          alert('Perfil actualizado correctamente');
-          localStorage.setItem('userName', data.user.name);
-        } else {
-          alert(data.message || 'Error al actualizar');
-        }
-      } catch (err) {
-        console.error('Error al actualizar perfil:', err);
-        alert('Error en la solicitud');
+      if (res.ok) {
+        document.getElementById('parteCuerpo').value = '';
+        document.getElementById('medida').value = '';
+        cargarMedidas();
+      } else {
+        alert(data.message || 'Error al guardar medida');
       }
-    });
+    } catch (err) {
+      console.error('Error al guardar medida:', err);
+    }
   });
-  
+
+  // Inicial
+  cargarMedidas();
+});
