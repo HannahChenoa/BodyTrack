@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -90,13 +91,13 @@
   <!-- Script para redirigir después de login -->
   <script>
     const formLogin = document.getElementById('formLogin');
-  
-    formLogin.addEventListener('submit', async function(e) {
+
+    formLogin.addEventListener('submit', async function (e) {
       e.preventDefault();
-  
+
       const email = document.getElementById('loginEmail').value;
       const password = document.getElementById('loginPassword').value;
-  
+
       try {
         const response = await fetch('http://localhost:3000/login', {
           method: 'POST',
@@ -105,9 +106,9 @@
           },
           body: JSON.stringify({ email, password })
         });
-  
+
         const data = await response.json();
-  
+
         if (response.ok) {
           // Reusar datos del registro
           const login = await fetch('http://localhost:3000/login', {
@@ -133,14 +134,14 @@
   </script>
   <script>
     const formRegister = document.getElementById('formRegister');
-  
-    formRegister.addEventListener('submit', async function(e) {
+
+    formRegister.addEventListener('submit', async function (e) {
       e.preventDefault();
-  
+
       const name = document.getElementById('registerName').value;
       const email = document.getElementById('registerEmail').value;
       const password = document.getElementById('registerPassword').value;
-  
+
       try {
         const response = await fetch('http://localhost:3000/register', {
           method: 'POST',
@@ -149,9 +150,9 @@
           },
           body: JSON.stringify({ name, email, password })
         });
-  
+
         const data = await response.json();
-  
+
         if (response.ok) {
           alert('Registro exitoso');
 
@@ -159,7 +160,43 @@
           localStorage.setItem('user', JSON.stringify(data.user));
 
           // Redirige directamente al home
-          window.location.href = './home.html';
+         
+          try {
+            const response = await fetch('http://localhost:3000/login', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ email, password })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+              // Reusar datos del registro
+              const login = await fetch('http://localhost:3000/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+              });
+
+              const loginData = await login.json();
+
+              if (login.ok) {
+                localStorage.setItem('user', JSON.stringify(loginData.user));
+                window.location.href = 'home.html';
+              } else {
+                alert('Error iniciando sesión automática');
+              }
+            }
+          } catch (error) {
+            console.error('Error al iniciar sesión:', error);
+            alert('Error al conectar con el servidor');
+          }
+
+
+
+          //window.location.href = './home.html';
         }
       } catch (error) {
         console.error('Error en registro:', error);
@@ -167,6 +204,7 @@
       }
     });
   </script>
-  
+
 </body>
+
 </html>
