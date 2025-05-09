@@ -32,4 +32,39 @@ router.post('/api/ejercicios', async (req, res) => {
   }
 });
 
+router.delete('/api/ejercicios/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    await Ejercicio.findByIdAndDelete(id);
+    res.json({ message: 'Ejercicio eliminado correctamente' });
+  } catch (err) {
+    console.error('Error al eliminar ejercicio:', err);
+    res.status(500).json({ message: 'Error al eliminar ejercicio' });
+  }
+});
+
+// PUT /api/ejercicios/:id
+router.put('/api/ejercicios/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { nombre, musculo, descripcion, link } = req.body;
+
+    const actualizado = await Ejercicio.findByIdAndUpdate(
+      id,
+      { nombre, musculo, descripcion, link },
+      { new: true }
+    );
+
+    if (!actualizado) {
+      return res.status(404).json({ message: 'Ejercicio no encontrado' });
+    }
+
+    res.json({ message: 'Ejercicio actualizado', ejercicio: actualizado });
+  } catch (err) {
+    console.error('Error al actualizar ejercicio:', err);
+    res.status(500).json({ message: 'Error al actualizar ejercicio' });
+  }
+});
+
+
 module.exports = router;
