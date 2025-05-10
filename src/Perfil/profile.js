@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const inputName = document.getElementById('nameInput');
   const inputEmail = document.getElementById('emailInput');
+  const genderInput = document.getElementById('genderInput');
   const editButton = document.getElementById('btnEditar');
   const saveButton = document.getElementById('editProfileBtn');
   const addBtn = document.getElementById('addMeasureBtn');
@@ -19,6 +20,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const data = await res.json();
     inputName.value = data.name;
     inputEmail.value = data.email;
+    genderInput.value = data.genero || 'Hombre';
   } catch (err) {
     console.error('Error al cargar perfil:', err);
     alert('No se pudo cargar el perfil');
@@ -64,6 +66,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   saveButton.addEventListener('click', async () => {
     const newName = inputName.value;
     const newEmail = inputEmail.value;
+    const newGenero = genderInput.value;
 
     try {
       const res = await fetch(`http://localhost:3000/profile/${user.id}`, {
@@ -71,13 +74,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ name: newName, email: newEmail })
+        body: JSON.stringify({ name: newName, email: newEmail, genero: newGenero })
       });
 
       const data = await res.json();
+
       if (res.ok) {
-        alert('Perfil actualizado');
-        localStorage.setItem('user', JSON.stringify({ ...user, name: newName, email: newEmail }));
+        alert('✅ Perfil actualizado correctamente');
+        localStorage.setItem('user', JSON.stringify({ ...user, name: newName, email: newEmail, genero: newGenero }));
         window.location.reload();
       } else {
         alert(data.message || 'Error al actualizar');
@@ -87,10 +91,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
+
   // Habilitar edición
   editButton.addEventListener('click', () => {
     inputName.removeAttribute('readonly');
     inputEmail.removeAttribute('readonly');
+    genderInput.removeAttribute('disabled');
     saveButton.style.display = 'inline-block';
     editButton.style.display = 'none';
   });
