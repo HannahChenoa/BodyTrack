@@ -42,6 +42,19 @@ app.post('/register', async (req, res) => {
 });
 app.get('/profile/:email', profileController.getUserByEmail);
 app.put('/profile/:id', profileController.updateUser);
+app.delete('/profile/:id', async (req, res) => {
+  try {
+    const deleted = await User.findByIdAndDelete(req.params.id);
+    if (!deleted) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+    res.json({ message: 'Usuario eliminado correctamente' });
+  } catch (err) {
+    console.error('Error al eliminar usuario:', err);
+    res.status(500).json({ message: 'Error del servidor' });
+  }
+});
+
 
 app.post('/login', async (req, res) => {
   try {

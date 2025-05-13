@@ -101,6 +101,32 @@ document.addEventListener('DOMContentLoaded', async () => {
     editButton.style.display = 'none';
   });
 
+  const deleteButton = document.getElementById('deleteUserBtn');
+
+  deleteButton.addEventListener('click', async () => {
+    if (!confirm('¿Estás seguro de que quieres eliminar tu cuenta? Esta acción no se puede deshacer.')) return;
+
+    try {
+      const res = await fetch(`http://localhost:3000/profile/${user.id}`, {
+        method: 'DELETE'
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        alert('Cuenta eliminada correctamente');
+        localStorage.clear(); // limpia sesión
+        window.location.href = './login.html';
+      } else {
+        alert(data.message || 'Error al eliminar cuenta');
+      }
+    } catch (err) {
+      console.error('Error al eliminar usuario:', err);
+      alert('Error al conectar con el servidor');
+    }
+  });
+
+
   // Agregar medida corporal
   addBtn.addEventListener('click', async () => {
     const parte = document.getElementById('parteCuerpo').value.trim();
