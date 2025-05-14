@@ -67,11 +67,14 @@
 
         const data = await res.json();
 
-        if (res.ok) {
+        if (res.ok && data.insertado) {
           alert('✅ Ejercicio guardado en base de datos');
-          ejercicios.push(nuevoEjercicio);
-          actualizarLista();
-        } else {
+          ejercicios.push({
+            ...data.insertado,
+            imagenURL: URL.createObjectURL(imagen)  // asegúrate que esta propiedad local exista
+          });
+        }
+        else {
           alert('❌ Error: ' + data.message);
         }
       } catch (err) {

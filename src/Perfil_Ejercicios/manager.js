@@ -25,7 +25,7 @@ router.post('/api/ejercicios', async (req, res) => {
     const nuevo = new Ejercicio({ nombre, musculo, descripcion, link });
     await nuevo.save();
 
-    res.status(201).json({ message: 'Ejercicio guardado exitosamente' });
+    res.status(201).json({ message: 'Ejercicio guardado exitosamente', insertado: nuevo });
   } catch (err) {
     console.error('Error al guardar ejercicio:', err);
     res.status(500).json({ message: 'Error al guardar ejercicio' });
